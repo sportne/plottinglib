@@ -8,6 +8,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 COMMANDS = [
+    ["uv", "run", "ruff", "format", "--check", "."],
+    ["uv", "run", "ruff", "check", "."],
+    ["uv", "run", "ty", "check", "."],
+    ["uv", "run", "pytest"],
     ["uv", "run", "--package", "plottinglib", "python", "packages/plottinglib/scripts/check.py"],
 ]
 

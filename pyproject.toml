@@ -19,3 +19,71 @@ package = false
 
 [tool.uv.workspace]
 members = ["packages/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["migration_examples", "packages", "scripts"]
+
+[tool.ruff.format]
+docstring-code-format = true
+line-ending = "lf"
+
+[tool.ruff.lint]
+select = [
+  "A",
+  "ARG",
+  "B",
+  "C4",
+  "E",
+  "F",
+  "I",
+  "N",
+  "NPY",
+  "PERF",
+  "PIE",
+  "PL",
+  "PTH",
+  "RET",
+  "RUF",
+  "SIM",
+  "UP",
+  "W",
+]
+ignore = [
+  "PLR0913",
+  "PLR2004",
+  "PLC0415",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"packages/plottinglib/tests/**/*.py" = ["ARG001", "PLR2004"]
+"packages/plottinglib/examples/**/*.py" = ["T201"]
+"packages/plottinglib/scripts/**/*.py" = ["T201"]
+"migration_examples/**/scripts/**/*.py" = ["E402", "T201"]
+
+[tool.ty.environment]
+python-version = "3.11"
+root = [".", "./packages/plottinglib/src"]
+
+[tool.ty.analysis]
+replace-imports-with-any = ["matlab", "matlab.**", "matplotlib.**", "mplcursors"]
+
+[tool.ty.rules]
+possibly-unresolved-reference = "warn"
+
+[tool.pytest.ini_options]
+testpaths = [
+  "packages/plottinglib/tests",
+  "migration_examples/matlab_parity/tests",
+]
+addopts = [
+  "-s",
+  "--import-mode=importlib",
+]
+markers = [
+  "matlab: requires MATLAB Engine for Python",
+]
+filterwarnings = [
+  "error",
+]
