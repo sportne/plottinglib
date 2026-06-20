@@ -2,7 +2,9 @@
 
 `plottinglib` is a small Matplotlib conventions package for exploratory plotting.
 
-It is **not** a replacement for Matplotlib and it does **not** select a Matplotlib GUI backend. Users still work with ordinary Matplotlib `Figure`, `Axes`, and `Line2D` objects. The package adds a thin, consistent layer for:
+It is **not** a replacement for Matplotlib and it does **not** select a
+Matplotlib GUI backend. Users still work with ordinary Matplotlib `Figure`,
+`Axes`, and `Line2D` objects. The package adds a thin, consistent layer for:
 
 - shared plotting style defaults
 - simple figure/subplot creation
@@ -12,7 +14,8 @@ It is **not** a replacement for Matplotlib and it does **not** select a Matplotl
 - explicit opt-in downsampling for large traces
 - consistent figure export
 
-The initial design goal is to make Python plotting feel more consistent for MATLAB-to-Python migration work without building a custom GUI framework.
+The initial design goal is to make Python plotting feel more consistent for
+MATLAB-to-Python migration work without building a custom GUI framework.
 
 ## Requirements
 
@@ -39,6 +42,8 @@ From the repository root:
 ```bash
 uv sync --all-packages
 ```
+
+This installs `plottinglib` as an editable workspace package.
 
 Run package checks:
 
@@ -87,10 +92,10 @@ Include development dependencies in the wheelhouse:
 uv run --package plottinglib python packages/plottinglib/scripts/build_wheelhouse.py --clean --include-dev
 ```
 
-The wheelhouse is written to:
+From the repository root, the wheelhouse is written to:
 
 ```text
-dist/wheelhouse/
+packages/plottinglib/dist/wheelhouse/
 ```
 
 ## Basic use
@@ -129,11 +134,13 @@ ap.plot_timeseries(axes[1], x, np.cos(x), label="cos")
 link = ap.link_x_axes(axes[0], axes[1])
 ```
 
-Keep the returned `link` object alive for as long as the axes should remain linked. Call `link.disconnect()` to remove the callbacks.
+Keep the returned `link` object alive for as long as the axes should remain
+linked. Call `link.disconnect()` to remove the callbacks.
 
 ## Large time series
 
-Downsampling is **off by default**. This is intentional: users see raw data unless they explicitly opt in.
+Downsampling is **off by default**. This is intentional: users see raw data
+unless they explicitly opt in.
 
 ```python
 line = ap.plot_timeseries(
@@ -145,7 +152,9 @@ line = ap.plot_timeseries(
 )
 ```
 
-The current downsampling strategy retains min/max values from uniform bins and preserves the first and last samples. It is intended as a conservative display helper, not a signal-processing operation.
+The current downsampling strategy retains min/max values from uniform bins and
+preserves the first and last samples. It is intended as a conservative display
+helper, not a signal-processing operation.
 
 ## Export
 
@@ -164,4 +173,6 @@ uv run --package plottinglib python packages/plottinglib/examples/linked_axes.py
 uv run --package plottinglib python packages/plottinglib/examples/large_timeseries.py
 ```
 
-For interactive desktop windows, use a Matplotlib backend appropriate for your environment. This package deliberately does not force `TkAgg`, `QtAgg`, or any other backend.
+For interactive desktop windows, use a Matplotlib backend appropriate for your
+environment. This package deliberately does not force `TkAgg`, `QtAgg`, or any
+other backend.
