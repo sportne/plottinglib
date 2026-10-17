@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v6.0.2
+      - uses: astral-sh/setup-uv@v10.3.0
+        with:
+          python-version: '3.12'
+          enable-cache: true
+      - name: Install the committed workspace lock
+        run: uv sync --all-packages --locked
+      - name: Run existing workspace and package checks
+        run: uv run python scripts/check.py
+      - name: Verify package distributions build
+        run: uv build --package plottinglib
